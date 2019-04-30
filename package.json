@@ -1,0 +1,42 @@
+{
+  "name": "Flexbox_Layout_Task",
+  "version": "1.0.0",
+  "description": "Please create two layouts using flexbox properties as much as possible: - img/screen_log_in.png - img/screen.png",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "predeploy": "gulp default",
+    "deploy": "gh-pages -d build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlenaKharytonchyk/Flexbox_Layout_Task.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlenaKharytonchyk/Flexbox_Layout_Task/issues"
+  },
+  "homepage": "https://alenakharytonchyk.github.io/Flexbox_Layout_Task/",
+  "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "autoprefixer": "^9.5.0",
+    "cssnano": "^4.1.10",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "gh-pages": "^2.0.1",
+    "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.7.0",
+    "gulp-csso": "^3.0.1",
+    "gulp-eslint": "^5.0.0",
+    "gulp-inject": "^5.0.2",
+    "gulp-less": "^4.0.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-watch": "^5.0.1"
+  }
+}
