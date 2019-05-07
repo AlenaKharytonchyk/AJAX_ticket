@@ -8,12 +8,12 @@
   <div class="content">
     <h1>{{title}}</h1>
     <ul>
-      <li class="genres">{{genres}}</li>
-      <li class="tagline">{{tagline}}</li>
-      <li class="release">{{release_date}}</li>
-      <li class="runtime>{{runtime}}</li>
-      <li class="overview">{{overview}}</li>
-      <li class="budget">$ {{budget}}</li>
+      <li class="genres"><span>genres:</span>{{genres}}</li>
+      <li class="tagline"><span>tagline:</span>{{tagline}}</li>
+      <li class="release"><span>release date:</span>{{release_date}}</li>
+      <li class="runtime><span>runtime:</span>{{runtime}}</li>
+      <li class="overview"><span>storyline:</span>{{overview}}</li>
+      <li class="budget"><span>budget:</span>$ {{budget}}</li>
     </ul>
   </div>      
     </li>`;
