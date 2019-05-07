@@ -6,14 +6,14 @@ const postcss = require('gulp-postcss');
 const minifyCSS = require('gulp-csso');
 const concat = require('gulp-concat');
 const inject = require('gulp-inject');
-const eslint = require('gulp-eslint');
+// const eslint = require('gulp-eslint');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const connect = require('gulp-connect');
 const babel = require('gulp-babel');
 
 function html() {
-  const target = src(['./src/index.html', './src/chat.html']);
+  const target = src(['./src/index.html']);
   const sources = src(['./build/js/*.js', './build/css/*.css'], {
     read: false
   });
@@ -43,8 +43,8 @@ function webserver() {
 
 function js() {
   return src('src/*.js', { sourcemaps: true })
-    .pipe(eslint())
-    .pipe(eslint.format())
+    // .pipe(eslint())
+    // .pipe(eslint.format())
     .pipe(babel({ presets: ['@babel/preset-env'] }))
     .pipe(concat('app.min.js'))
     .pipe(dest('build/js', { sourcemaps: true }))
