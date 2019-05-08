@@ -24,6 +24,7 @@
       this.container = config.container;
       this.searchBy = 'title';
       this.initSearch();
+      this.paginationRendering();
       this.fetch();
     },
     attachTemplate: function aT() {
@@ -40,10 +41,47 @@
     },
     fetch: function fetch() {
       const self = this;
-      $.getJSON(`${this.url}?searchBy=${this.searchBy}&search=${this.movieSearch || ''}`, function updateCards(data) {
+      $.getJSON(`${this.url}?searchBy=${this.searchBy}&search=${this.movieSearch || ''}&offset=${this.pagination.offset}`, function updateCards(data) {
         self.movieList = data.data;
+        self.pagination = {
+          offset: data.offset,
+          limit: data.limit,
+          total: data.total
+        };
         self.attachTemplate();
+        self.updatePagination();
       });
+    },
+    paginationRendering: function paginationRendering() {
+      const pagination = `<div class="pagination">
+      <button class="left"></button>
+      <span class="page-left">0</span>
+      <span>of</span>
+      <span class="page-right">0</span>
+      <button class="right"></button>`;
+      $('.pagination-container').append(pagination);
+      $('.left').on('click', ()=>{
+        if (this.pagination.offset === 0) { return; }
+        this.pagination.offset -= this.pagination.limit;
+        this.fetch();
+      });
+      $('.right').on('click', ()=>{
+        if (this.pagination.offset + this.pagination.limit >= this.pagination.total) { return; }
+        this.pagination.offset += this.pagination.limit;
+        this.fetch();
+      });
+      this.pagination = {
+        offset: 0,
+        limit: 0,
+        total: 0
+      };
+    },
+    updatePagination: function updatePagination() {
+      const currentPage = (this.pagination.offset / this.pagination.limit) + 1;
+      const allPages = Math.ceil(this.pagination.total / this.pagination.limit);
+
+      $('.page-left').text(currentPage);
+      $('.page-right').text(allPages);
     },
     initSearch: function initSearch() {
       const search = `<label for='movie-search'>
@@ -53,7 +91,7 @@
           <option value="title">title</option>
           <option value="genres">genres</option>
         </select>
-        <input type='search' id='movie-search' name=''>
+        <input type='search' id='movie-search' placeholder="Search...">
         <button class="search-btn">Let's go!</button>
         </span>`;
       $('.search').append(search);
