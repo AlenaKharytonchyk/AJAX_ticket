@@ -19,17 +19,18 @@
     </li>`;
   const movie = {
     init: function init(config) {
-      this.url = 'http://react-cdp-api.herokuapp.com/movies/';
+      this.url = 'http://react-cdp-api.herokuapp.com/movies';
       this.template = config.template;
       this.container = config.container;
+      this.searchBy = 'title';
+      this.initSearch();
       this.fetch();
     },
     attachTemplate: function aT() {
       const cards = [];
-      console.log(this.movieList);
       $.map(this.movieList, (e) => {
         let cardHtml = this.template;
-        Object.keys(e).forEach((key)=>{
+        Object.keys(e).forEach((key) => {
           let temp = new RegExp('{{' + key + '}}', 'g');
           cardHtml = cardHtml.replace(temp, e[key]);
         });
@@ -39,14 +40,33 @@
     },
     fetch: function fetch() {
       const self = this;
-      $.getJSON(this.url, function (data) {
+      $.getJSON(`${this.url}?searchBy=${this.searchBy}&search=${this.movieSearch || ''}`, function updateCards(data) {
         self.movieList = data.data;
-        console.log(data);
-
         self.attachTemplate();
       });
+    },
+    initSearch: function initSearch() {
+      const search = `<label for='movie-search'>
+        Search the movie:</label>
+        <span class="search-field">
+        <select id="search-by">
+          <option value="title">title</option>
+          <option value="genres">genres</option>
+        </select>
+        <input type='search' id='movie-search' name=''>
+        <button class="search-btn">Let's go!</button>
+        </span>`;
+      $('.search').append(search);
+      $('#search-by').on('change', (event) => {
+        this.searchBy = event.target.value;
+      });
+      $('#movie-search').on('change', (event) => {
+        this.movieSearch = event.target.value;
+      });
+      $('.search-btn').click(() => {
+        this.fetch();
+      });
     }
-
   };
   movie.init({
     template: card,
