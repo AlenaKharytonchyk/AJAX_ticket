@@ -11,6 +11,8 @@ body {
   background-color: @body-background-color;
   color: @main-text-color;
   font-size: 15px;
+  min-width: 920px;
+  overflow: hidden;
 }
 .movies {
   display: flex;
@@ -89,7 +91,8 @@ body {
   label {
     font-size: 1.3rem;
   }
-  .search-btn {
+}
+  .search-btn, .left, .right {
     background-color: @body-background-color;
     border: solid 1px @white;
     padding: 0.5rem 1rem;
@@ -99,7 +102,7 @@ body {
     color: @main-text-color;
     cursor: pointer;
   }
-}
+
 .search-field {
   // box-shadow: 0px 0px 16px 0px @second-elements-color;
   display: flex;
@@ -115,4 +118,13 @@ body {
   #movie-search {
     border: none;
   }
+}
+.pagination {
+  position: fixed;
+  z-index: 2;
+  // left: 90%;
+  left: calc(99%-170px);
+  top: 5%;
+  background-color: @white;
+  color: @body-background-color;
 }

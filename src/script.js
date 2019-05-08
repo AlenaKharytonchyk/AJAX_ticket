@@ -54,11 +54,11 @@
     },
     paginationRendering: function paginationRendering() {
       const pagination = `<div class="pagination">
-      <button class="left"></button>
+      <button class="left"><</button>
       <span class="page-left">0</span>
       <span>of</span>
       <span class="page-right">0</span>
-      <button class="right"></button>`;
+      <button class="right">></button>`;
       $('.pagination-container').append(pagination);
       $('.left').on('click', ()=>{
         if (this.pagination.offset === 0) { return; }
