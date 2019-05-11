@@ -9,15 +9,15 @@
       this.searchBy = 'title';
       this.fetch();
     },
-    attachTemplate: function a(e) {
+    attachTemplate: function a() {
       var self = this;
-      // Changing Jquery map to array map
-      var cards = this.movieList.map(function m(movies) {
+      var cards = [];
+      cards = this.movieList.map(function m(movies) {
         var template = self.template;
-        let cardHtml = template;
+        // var cardHtml = template;
         Object.keys(movies).forEach(function k(key) {
           var temp = new RegExp('{{' + key + '}}', 'g');
-          template = cardHtml.replace(temp, e[key]);
+          template = template.replace(temp, movies[key]);
         });
         return template;
       });
@@ -37,7 +37,6 @@
                 total: data.total
               };
               self.attachTemplate();
-              self.updatePagination();
             });
         });
     }
