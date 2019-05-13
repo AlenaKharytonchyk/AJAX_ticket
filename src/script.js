@@ -1,4 +1,4 @@
-(function movieFunc() {
+function movieFunc() {
   const card = `<li class="card">
   <div class="media">     
     <img src="{{poster_path}}" alt="{{title}}">
@@ -110,4 +110,10 @@
     template: card,
     container: $('ul.movies')
   });
-}());
+}
+
+document.onreadystatechange = function () {
+  if (document.readyState === 'complete') {
+    movieFunc();
+  }
+};
