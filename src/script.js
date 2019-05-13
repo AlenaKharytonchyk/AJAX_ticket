@@ -41,28 +41,30 @@ function movieFunc() {
     },
     fetch: function fetch() {
       const self = this;
+      function updateCards(data) {
+        self.movieList = data.data;
+        self.pagination = {
+          offset: data.offset,
+          limit: data.limit,
+          total: data.total
+        };
+        self.attachTemplate();
+        self.updatePagination();
+      }
+      function onError(jqXHR) {
+        if (jqXHR.status && jqXHR.status === 400) {
+          alert(jqXHR.responseText);
+        } else {
+          alert('Something went wrong');
+        }
+      }
       $.ajax({
         type: 'GET',
         dataType: 'json',
         url: `${this.url}?searchBy=${this.searchBy}&search=${this.movieSearch || ''}&offset=${this.pagination.offset}`,
         data: '',
-        success: function updateCards(data) {
-          self.movieList = data.data;
-          self.pagination = {
-            offset: data.offset,
-            limit: data.limit,
-            total: data.total
-          };
-          self.attachTemplate();
-          self.updatePagination();
-        },
-        error: function onError(jqXHR) {
-          if (jqXHR.status && jqXHR.status === 400) {
-            alert(jqXHR.responseText);
-          } else {
-            alert('Something went wrong');
-          }
-        }
+        success: updateCards,
+        error: onError
       });
     },
     paginationRendering: function paginationRendering() {
@@ -73,15 +75,18 @@ function movieFunc() {
       <span class="page-right">0</span>
       <button class="right">></button>`;
       $('.pagination-container').append(pagination);
-      $('.left').on('click', ()=>{
-        if (this.pagination.offset === 0) { return; }
-        this.pagination.offset -= this.pagination.limit;
-        this.fetch();
-      });
-      $('.right').on('click', ()=>{
-        if (this.pagination.offset + this.pagination.limit >= this.pagination.total) { return; }
-        this.pagination.offset += this.pagination.limit;
-        this.fetch();
+      let self = this;
+      $('.pagination-container').on('click', function onClick(event) {
+        const isStart = self.pagination.offset === 0;
+        const isEnd = self.pagination.offset + self.pagination.limit >= self.pagination.total;
+        if ($(event.target).hasClass('left') && !isStart) {
+          self.pagination.offset -= self.pagination.limit;
+          self.fetch();
+        }
+        if ($(event.target).hasClass('right') && !isEnd) {
+          self.pagination.offset += self.pagination.limit;
+          self.fetch();
+        }
       });
       this.pagination = {
         offset: 0,
