@@ -108,11 +108,14 @@ function movieFunc() {
         <button class="search-btn">Let's go!</button>
         </span>`;
       $('.search').append(search);
-      $('#search-by').on('change', (event) => {
-        this.searchBy = event.target.value;
-      });
-      $('#movie-search').on('change', (event) => {
-        this.movieSearch = event.target.value;
+      let self = this;
+      $('.search').on('change', function onChange(event) {
+        if (event.target.id === 'search-by') {
+          self.searchBy = event.target.value;
+        } else if (event.target.id === 'movie-search') {
+          self.movieSearch = event.target.value;
+        }
+        event.stopPropagation();
       });
       $('.search-btn').click(() => {
         this.fetch();
