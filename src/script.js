@@ -41,15 +41,28 @@ function movieFunc() {
     },
     fetch: function fetch() {
       const self = this;
-      $.getJSON(`${this.url}?searchBy=${this.searchBy}&search=${this.movieSearch || ''}&offset=${this.pagination.offset}`, function updateCards(data) {
-        self.movieList = data.data;
-        self.pagination = {
-          offset: data.offset,
-          limit: data.limit,
-          total: data.total
-        };
-        self.attachTemplate();
-        self.updatePagination();
+      $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        url: `${this.url}?searchBy=${this.searchBy}&search=${this.movieSearch || ''}&offset=${this.pagination.offset}`,
+        data: '',
+        success: function updateCards(data) {
+          self.movieList = data.data;
+          self.pagination = {
+            offset: data.offset,
+            limit: data.limit,
+            total: data.total
+          };
+          self.attachTemplate();
+          self.updatePagination();
+        },
+        error: function onError(jqXHR) {
+          if (jqXHR.status && jqXHR.status === 400) {
+            alert(jqXHR.responseText);
+          } else {
+            alert('Something went wrong');
+          }
+        }
       });
     },
     paginationRendering: function paginationRendering() {
@@ -112,7 +125,7 @@ function movieFunc() {
   });
 }
 
-document.onreadystatechange = function () {
+document.onreadystatechange = function funcComplete() {
   if (document.readyState === 'complete') {
     movieFunc();
   }
