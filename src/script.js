@@ -52,11 +52,9 @@ function movieFunc() {
         self.updatePagination();
       }
       function onError(jqXHR) {
-        if (jqXHR.status && jqXHR.status !== 200) {
+        if (jqXHR.status && jqXHR.status === 401) {
           alert(jqXHR.responseText);
-        } else {
-          alert('Something went wrong');
-        }
+        } else (alert('Smth wrong!'));
       }
       $.ajax({
         type: 'GET',
