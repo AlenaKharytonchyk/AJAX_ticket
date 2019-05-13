@@ -52,7 +52,7 @@ function movieFunc() {
         self.updatePagination();
       }
       function onError(jqXHR) {
-        if (jqXHR.status && jqXHR.status === 400) {
+        if (jqXHR.status && jqXHR.status !== 200) {
           alert(jqXHR.responseText);
         } else {
           alert('Something went wrong');
