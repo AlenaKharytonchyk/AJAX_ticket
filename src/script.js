@@ -1,5 +1,4 @@
-function movieFunc() {
-  const card = `<li class="card">
+const card = `<li class="card">
   <div class="media">     
     <img src="{{poster_path}}" alt="{{title}}">
     <span class="vote">{{vote_average}}</span> 
@@ -17,21 +16,92 @@ function movieFunc() {
     </ul>
   </div>      
     </li>`;
-  class Movie {
-    constructor(config) {
-      this.baseUrl = 'http://react-cdp-api.herokuapp.com/movies';
-      this.template = config.template;
-      this.container = config.container;
-      this.searchBy = 'title';
-      this.pagination = {
-        offset: 0,
-        limit: 0,
-        total: 0
-      };
-    }
+class Movie {
+  constructor(config) {
+    this.baseUrl = 'http://react-cdp-api.herokuapp.com/movies';
+    this.template = config.template;
+    this.container = config.container;
+    this.searchBy = 'title';
+    this.pagination = {
+      offset: 0,
+      limit: 0,
+      total: 0
+    };
+  }
 
-    initSearch() {
-      const search = `<label for='movie-search'>
+  get url() {
+    return `${this.baseUrl}?searchBy=${this.searchBy}&search=${this.movieSearch || ''}&offset=${this.pagination.offset}`;
+  }
+
+  render() {
+    this.initSearch();
+    this.paginationRendering();
+    this.fetch();
+  }
+
+  attachTemplate() {
+    let cards = [];
+    cards = this.movieList.map((movies) => {
+      let template = this.template;
+      Object.keys(movies).forEach((key) => {
+        let temp = new RegExp('{{' + key + '}}', 'g');
+        template = template.replace(temp, movies[key]);
+      });
+      return template;
+    });
+    this.container.innerHTML = cards.join('');
+  }
+
+  fetch() {
+    fetch(this.url)
+      .then(response => response.json())
+      .then(data => {
+        this.movieList = data.data;
+        this.pagination = {
+          offset: data.offset,
+          limit: data.limit,
+          total: data.total
+        };
+        this.attachTemplate();
+        this.updatePagination();
+      })
+      .catch(error => { console.warn(error); });
+  }
+
+  paginationRendering() {
+    const pagination = `<div class="pagination">
+      <button class="left"><</button>
+      <span class="page-left">0</span>
+      <span>of</span>
+      <span class="page-right">0</span>
+      <button class="right">></button>`;
+    const paginationContainer = document.querySelector('.pagination-container');
+    paginationContainer.insertAdjacentHTML('beforeend', pagination);
+    paginationContainer.addEventListener('click', (e) => {
+      const { offset, limit, total } = this.pagination;
+      const isStart = offset === 0;
+      const isEnd = offset + limit >= total;
+      if (e.target && e.target.matches('button.left') && !isStart) {
+        this.pagination.offset -= limit;
+        this.fetch();
+      }
+      if (e.target && e.target.matches('button.right') && !isEnd) {
+        this.pagination.offset += limit;
+        this.fetch();
+      }
+    });
+  }
+
+  updatePagination() {
+    const { offset, limit, total } = this.pagination;
+    const currentPage = (offset / limit) + 1;
+    const allPages = Math.ceil(total / limit);
+    document.querySelector('.page-left').innerHTML = currentPage;
+    document.querySelector('.page-right').innerHTML = allPages;
+  }
+
+  initSearch() {
+    const search = `<label for='movie-search'>
       Search the movie:</label>
       <span class="search-field">
       <select id="search-by">
@@ -41,129 +111,30 @@ function movieFunc() {
       <input type='search' id='movie-search' placeholder="Search...">
       <button class="search-btn">Let's go!</button>
       </span>`;
-      const searchContainer = document.querySelector('.search');
-      searchContainer.insertAdjacentHTML('beforeend', search);
-      searchContainer.addEventListener('change', (e) => {
-        if (e.target && e.target.matches('select#search-by')) {
-          this.searchBy = e.target.value;
-        } else if (e.target && e.target.matches('input#movie-search')) {
-          this.movieSearch = e.target.value;
-        }
-        e.stopPropagation();
-      });
-      document.querySelector('.search-btn').addEventListener('click', () => {
-        return this.fetch();
-      });
-    }
+    const searchContainer = document.querySelector('.search');
+    searchContainer.insertAdjacentHTML('beforeend', search);
+    searchContainer.addEventListener('change', (e) => {
+      if (e.target && e.target.matches('select#search-by')) {
+        this.searchBy = e.target.value;
+      } else if (e.target && e.target.matches('input#movie-search')) {
+        this.movieSearch = e.target.value;
+      }
+      e.stopPropagation();
+    });
+    document.querySelector('.search-btn').addEventListener('click', () => {
+      return this.fetch();
+    });
   }
-  const movie = {
-    init: function init(config) {
-      this.url = 'http://react-cdp-api.herokuapp.com/movies';
-      this.template = config.template;
-      this.container = config.container;
-      this.searchBy = 'title';
-      this.initSearch();
-      this.paginationRendering();
-      this.fetch();
-    },
-    attachTemplate: function aT() {
-      const self = this;
-      let cards = [];
-      cards = self.movieList.map(function m(movies) {
-        let template = self.template;
-        Object.keys(movies).forEach(function k(key) {
-          let temp = new RegExp('{{' + key + '}}', 'g');
-          template = template.replace(temp, movies[key]);
-        });
-        return template;
-      });
-      this.container.innerHTML = cards.join('');
-    },
-    fetch: function fnFetch() {
-      const self = this;
-      const url = `${this.url}?searchBy=${this.searchBy}&search=${this.movieSearch || ''}&offset=${this.pagination.offset}`;
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          self.movieList = data.data;
-          self.pagination = {
-            offset: data.offset,
-            limit: data.limit,
-            total: data.total
-          };
-          self.attachTemplate();
-          self.updatePagination();
-        });
-    },
-    paginationRendering: function paginationRendering() {
-      const pagination = `<div class="pagination">
-      <button class="left"><</button>
-      <span class="page-left">0</span>
-      <span>of</span>
-      <span class="page-right">0</span>
-      <button class="right">></button>`;
-      let paginationContainer = document.querySelector('.pagination-container');
-      const self = this;
-      paginationContainer.insertAdjacentHTML('beforeend', pagination);
-      paginationContainer.addEventListener('click', function onClick(e) {
-        let isStart = self.pagination.offset === 0;
-        let isEnd = self.pagination.offset + self.pagination.limit >= self.pagination.total;
-        if (e.target && e.target.matches('button.left') && !isStart) {
-          self.pagination.offset -= self.pagination.limit;
-          self.fetch();
-        }
-        if (e.target && e.target.matches('button.right') && !isEnd) {
-          self.pagination.offset += self.pagination.limit;
-          self.fetch();
-        }
-      });
-      self.pagination = {
-        offset: 0,
-        limit: 0,
-        total: 0
-      };
-    },
-    updatePagination: function updatePagination() {
-      let currentPage = (this.pagination.offset / this.pagination.limit) + 1;
-      let allPages = Math.ceil(this.pagination.total / this.pagination.limit);
-      document.querySelector('.page-left').innerHTML = currentPage;
-      document.querySelector('.page-right').innerHTML = allPages;
-    },
-    initSearch: function inintSearch() {
-      const search = `<label for='movie-search'>
-        Search the movie:</label>
-        <span class="search-field">
-        <select id="search-by">
-          <option value="title">title</option>
-          <option value="genres">genres</option>
-        </select>
-        <input type='search' id='movie-search' placeholder="Search...">
-        <button class="search-btn">Let's go!</button>
-        </span>`;
-      let searchContainer = document.querySelector('.search');
-      const self = this;
-      searchContainer.insertAdjacentHTML('beforeend', search);
-      searchContainer.addEventListener('change', function onChange(e) {
-        if (e.target && e.target.matches('select#search-by')) {
-          self.searchBy = e.target.value;
-        } else if (e.target && e.target.matches('input#movie-search')) {
-          self.movieSearch = e.target.value;
-        }
-        e.stopPropagation();
-      });
-      document.querySelector('.search-btn').addEventListener('click', function onClick() {
-        return self.fetch();
-      });
-    }
-  };
-  movie.init({
-    template: card,
-    container: document.getElementsByClassName('movies')[0]
-  });
 }
+
+const config = {
+  template: card,
+  container: document.getElementsByClassName('movies')[0]
+};
+const movieApp = new Movie(config);
 
 document.onreadystatechange = function funcComplete() {
   if (document.readyState === 'complete') {
-    movieFunc();
+    movieApp.render();
   }
 };
