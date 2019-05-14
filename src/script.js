@@ -10,7 +10,7 @@ function movieFunc() {
       this.initSearch();
       this.fetch();
     },
-    attachTemplate: function a() {
+    attachTemplate: function aT() {
       var self = this;
       var cards = [];
       cards = self.movieList.map(function m(movies) {
@@ -24,9 +24,9 @@ function movieFunc() {
       });
       this.container.innerHTML = cards.join('');
     },
-    fetch: function f() {
+    fetch: function fetch() {
       var self = this;
-      var url = 'http://react-cdp-api.herokuapp.com/movies/';
+      var url = self.url + '?searchBy=' + self.searchBy + '&search=' + (self.movieSearch || '');
       var xhr = new XMLHttpRequest();
       xhr.open('GET', url, true);
       xhr.responseType = 'json';
@@ -49,7 +49,19 @@ function movieFunc() {
     initSearch: function initSearch() {
       var search = '<label for="movie-search"> Search the movie:</label> <span class="search-field"> <select id="search-by"> <option value="title">title</option> <option value="genres">genres</option> </select> <input type="search" id="movie-search" placeholder="Search..."> <button class="search-btn">Let\'s go!</button> </span>';
       var searchContainer = document.querySelector('.search');
+      var self = this;
       searchContainer.insertAdjacentHTML('beforeend', search);
+      searchContainer.addEventListener('change', function onChange(e) {
+        if (e.target && e.target.matches('select#search-by')) {
+          self.searchBy = e.target.value;
+        } else if (e.target && e.target.matches('input#movie-search')) {
+          self.movieSearch = e.target.value;
+        }
+        e.stopPropagation();
+      });
+      document.querySelector('.search-btn').addEventListener('click', function onClick() {
+        return self.fetch();
+      });
     }
   };
   movie.init({
