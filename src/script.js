@@ -23,8 +23,8 @@ function movieFunc() {
       this.template = config.template;
       this.container = config.container;
       this.searchBy = 'title';
-      // this.initSearch();
-      // this.paginationRendering();
+      this.initSearch();
+      this.paginationRendering();
       this.fetch();
     },
     attachTemplate: function aT() {
@@ -42,18 +42,80 @@ function movieFunc() {
     },
     fetch: function fnFetch() {
       let self = this;
-      let url = 'http://react-cdp-api.herokuapp.com/movies';
+      let url = `${this.url}?searchBy=${this.searchBy}&search=${this.movieSearch || ''}&offset=${this.pagination.offset}`;
       fetch(url)
         .then(response => response.json())
         .then(data => {
           self.movieList = data.data;
+          console.log(self.movieList);
           self.pagination = {
             offset: data.offset,
             limit: data.limit,
             total: data.total
           };
           self.attachTemplate();
+          self.updatePagination();
         });
+    },
+    paginationRendering: function paginationRendering() {
+      const pagination = `<div class="pagination">
+      <button class="left"><</button>
+      <span class="page-left">0</span>
+      <span>of</span>
+      <span class="page-right">0</span>
+      <button class="right">></button>`;
+      let paginationContainer = document.querySelector('.pagination-container');
+      let self = this;
+      paginationContainer.insertAdjacentHTML('beforeend', pagination);
+      paginationContainer.addEventListener('click', function onClick(e) {
+        let isStart = self.pagination.offset === 0;
+        let isEnd = self.pagination.offset + self.pagination.limit >= self.pagination.total;
+        if (e.target && e.target.matches('button.left') && !isStart) {
+          self.pagination.offset -= self.pagination.limit;
+          self.fetch();
+        }
+        if (e.target && e.target.matches('button.right') && !isEnd) {
+          self.pagination.offset += self.pagination.limit;
+          self.fetch();
+        }
+      });
+      self.pagination = {
+        offset: 0,
+        limit: 0,
+        total: 0
+      };
+    },
+    updatePagination: function updatePagination() {
+      let currentPage = (this.pagination.offset / this.pagination.limit) + 1;
+      let allPages = Math.ceil(this.pagination.total / this.pagination.limit);
+      document.querySelector('.page-left').innerHTML = currentPage;
+      document.querySelector('.page-right').innerHTML = allPages;
+    },
+    initSearch: function inintSearch() {
+      const search = `<label for='movie-search'>
+        Search the movie:</label>
+        <span class="search-field">
+        <select id="search-by">
+          <option value="title">title</option>
+          <option value="genres">genres</option>
+        </select>
+        <input type='search' id='movie-search' placeholder="Search...">
+        <button class="search-btn">Let's go!</button>
+        </span>`;
+      let searchContainer = document.querySelector('.search');
+      let self = this;
+      searchContainer.insertAdjacentHTML('beforeend', search);
+      searchContainer.addEventListener('change', function onChange(e) {
+        if (e.target && e.target.matches('select#search-by')) {
+          self.searchBy = e.target.value;
+        } else if (e.target && e.target.matches('input#movie-search')) {
+          self.movieSearch = e.target.value;
+        }
+        e.stopPropagation();
+      });
+      document.querySelector('.search-btn').addEventListener('click', function onClick() {
+        return self.fetch();
+      });
     }
   };
   movie.init({
