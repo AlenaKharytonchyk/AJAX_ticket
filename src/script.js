@@ -52,7 +52,14 @@ class Movie {
     this.container.innerHTML = cards.join('');
   }
 
-  fetch() {
+  fetch(resetPagination) {
+    if (resetPagination) {
+      this.pagination = {
+        offset: 0,
+        limit: 0,
+        total: 0
+      };
+    }
     fetch(this.url)
       .then(response => response.json())
       .then(data => {
@@ -122,7 +129,7 @@ class Movie {
       e.stopPropagation();
     });
     document.querySelector('.search-btn').addEventListener('click', () => {
-      return this.fetch();
+      return this.fetch(true);
     });
   }
 }
