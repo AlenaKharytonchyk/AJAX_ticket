@@ -28,35 +28,23 @@
       var url = 'http://react-cdp-api.herokuapp.com/movies/';
       var xhr = new XMLHttpRequest();
       xhr.open('GET', url, true);
+      xhr.responseType = 'json';
       xhr.onreadystatechange = function request(data) {
-        // if (xhr.readyState === 4) {
-        self.movieList = data.data;
-        self.pagination = {
-          offset: data.offset,
-          limit: data.limit,
-          total: data.total
-        };
-
-        self.attachTemplate();
-        // }
+        if (xhr.readyState === 4) {
+          console.log(xhr.response);
+          self.movieList = xhr.response.data;
+          self.pagination = {
+            offset: data.offset,
+            limit: data.limit,
+            total: data.total
+          };
+          self.attachTemplate();
+        }
         if (xhr.status !== 200) {
           alert(xhr.status + ': ' + xhr.statusText);
         }
       };
       xhr.send();
-      // fetch(url)
-      //   .then(function r(response) {
-      //     response.json()
-      //       .then(function d(data) {
-      //         self.movieList = data.data;
-      //         self.pagination = {
-      //           offset: data.offset,
-      //           limit: data.limit,
-      //           total: data.total
-      //         };
-      //         self.attachTemplate();
-      //       });
-      //   });
     }
   };
   movie.init({
