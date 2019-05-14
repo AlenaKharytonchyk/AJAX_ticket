@@ -1,5 +1,5 @@
 
-(function movieFunc() {
+function movieFunc() {
   var card = '<li class="card"><div class="media"><img src="{{poster_path}}" alt="{{title}}"><span class="vote">{{vote_average}}</span></div><div class="content"> <h1>{{title}}</h1> <ul> <li class="genres"><span>genres:</span>{{genres}}</li><li class="tagline"><span>tagline:</span>{{tagline}}</li><li class="release"><span>release date:</span>{{release_date}}</li><li class="runtime"><span>runtime:</span>{{runtime}}</li><li class="overview"><span>storyline:</span>{{overview}}</li><li class="budget"><span>budget:</span>{{budget}}</li></ul></div></li>';
   var movie = {
     init: function init(config) {
@@ -51,4 +51,10 @@
     template: card,
     container: document.getElementsByClassName('movies')[0] // $('ul.movies')
   });
-}());
+}
+
+document.onreadystatechange = function funcComplete() {
+  if (document.readyState === 'complete') {
+    movieFunc();
+  }
+};
