@@ -12,7 +12,7 @@
     attachTemplate: function a() {
       var self = this;
       var cards = [];
-      cards = this.movieList.map(function m(movies) {
+      cards = self.movieList.map(function m(movies) {
         var template = self.template;
         // var cardHtml = template;
         Object.keys(movies).forEach(function k(key) {
@@ -26,19 +26,37 @@
     fetch: function f() {
       var self = this;
       var url = 'http://react-cdp-api.herokuapp.com/movies/';
-      fetch(url)
-        .then(function r(response) {
-          response.json()
-            .then(function d(data) {
-              self.movieList = data.data;
-              self.pagination = {
-                offset: data.offset,
-                limit: data.limit,
-                total: data.total
-              };
-              self.attachTemplate();
-            });
-        });
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);
+      xhr.onreadystatechange = function request(data) {
+        // if (xhr.readyState === 4) {
+        self.movieList = data.data;
+        self.pagination = {
+          offset: data.offset,
+          limit: data.limit,
+          total: data.total
+        };
+
+        self.attachTemplate();
+        // }
+        if (xhr.status !== 200) {
+          alert(xhr.status + ': ' + xhr.statusText);
+        }
+      };
+      xhr.send();
+      // fetch(url)
+      //   .then(function r(response) {
+      //     response.json()
+      //       .then(function d(data) {
+      //         self.movieList = data.data;
+      //         self.pagination = {
+      //           offset: data.offset,
+      //           limit: data.limit,
+      //           total: data.total
+      //         };
+      //         self.attachTemplate();
+      //       });
+      //   });
     }
   };
   movie.init({
