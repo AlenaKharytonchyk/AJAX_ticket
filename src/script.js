@@ -8,6 +8,7 @@ function movieFunc() {
       this.container = config.container;
       this.searchBy = 'title';
       this.initSearch();
+      this.paginationRendering();
       this.fetch();
     },
     attachTemplate: function aT() {
@@ -26,25 +27,55 @@ function movieFunc() {
     },
     fetch: function fetch() {
       var self = this;
-      var url = self.url + '?searchBy=' + self.searchBy + '&search=' + (self.movieSearch || '');
+      var url = self.url + '?searchBy=' + self.searchBy + '&search=' + (self.movieSearch || '') + '&offset=' + self.pagination.offset;
       var xhr = new XMLHttpRequest();
       xhr.open('GET', url, true);
       xhr.responseType = 'json';
-      xhr.onreadystatechange = function request(data) {
+      xhr.onreadystatechange = function request() {
         if (xhr.readyState === 4) {
           self.movieList = xhr.response.data;
           self.pagination = {
-            offset: data.offset,
-            limit: data.limit,
-            total: data.total
+            offset: xhr.response.offset,
+            limit: xhr.response.limit,
+            total: xhr.response.total
           };
           self.attachTemplate();
+          self.updatePagination();
         }
         if (xhr.status !== 200) {
           alert(xhr.status + ': ' + xhr.statusText);
         }
       };
       xhr.send();
+    },
+    paginationRendering: function paginationRendering() {
+      var pagination = '<div class="pagination"> <button class="left"><</button> <span class="page-left"></span> <span>of</span> <span class="page-right"></span> <button class="right">></button>';
+      var paginationContainer = document.querySelector('.pagination-container');
+      var self = this;
+      paginationContainer.insertAdjacentHTML('beforeend', pagination);
+      paginationContainer.addEventListener('click', function onClick(e) {
+        var isStart = self.pagination.offset === 0;
+        var isEnd = self.pagination.offset + self.pagination.limit >= self.pagination.total;
+        if (e.target && e.target.matches('button.left') && !isStart) {
+          self.pagination.offset -= self.pagination.limit;
+          self.fetch();
+        }
+        if (e.target && e.target.matches('button.right') && !isEnd) {
+          self.pagination.offset += self.pagination.limit;
+          self.fetch();
+        }
+      });
+      self.pagination = {
+        offset: 0,
+        limit: 0,
+        total: 0
+      };
+    },
+    updatePagination: function updatePagination() {
+      var currentPage = (this.pagination.offset / this.pagination.limit) + 1;
+      var allPages = Math.ceil(this.pagination.total / this.pagination.limit);
+      document.querySelector('.page-left').innerHTML = currentPage;
+      document.querySelector('.page-right').innerHTML = allPages;
     },
     initSearch: function initSearch() {
       var search = '<label for="movie-search"> Search the movie:</label> <span class="search-field"> <select id="search-by"> <option value="title">title</option> <option value="genres">genres</option> </select> <input type="search" id="movie-search" placeholder="Search..."> <button class="search-btn">Let\'s go!</button> </span>';
