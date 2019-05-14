@@ -61,6 +61,7 @@ function movieFunc() {
         dataType: 'json',
         url: `${this.url}?searchBy=${this.searchBy}&search=${this.movieSearch || ''}&offset=${this.pagination.offset}`,
         data: '',
+        cache: false,
         success: updateCards,
         error: onError
       });
