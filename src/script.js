@@ -17,6 +17,45 @@ function movieFunc() {
     </ul>
   </div>      
     </li>`;
+  class Movie {
+    constructor(config) {
+      this.baseUrl = 'http://react-cdp-api.herokuapp.com/movies';
+      this.template = config.template;
+      this.container = config.container;
+      this.searchBy = 'title';
+      this.pagination = {
+        offset: 0,
+        limit: 0,
+        total: 0
+      };
+    }
+
+    initSearch() {
+      const search = `<label for='movie-search'>
+      Search the movie:</label>
+      <span class="search-field">
+      <select id="search-by">
+        <option value="title">title</option>
+        <option value="genres">genres</option>
+      </select>
+      <input type='search' id='movie-search' placeholder="Search...">
+      <button class="search-btn">Let's go!</button>
+      </span>`;
+      const searchContainer = document.querySelector('.search');
+      searchContainer.insertAdjacentHTML('beforeend', search);
+      searchContainer.addEventListener('change', (e) => {
+        if (e.target && e.target.matches('select#search-by')) {
+          this.searchBy = e.target.value;
+        } else if (e.target && e.target.matches('input#movie-search')) {
+          this.movieSearch = e.target.value;
+        }
+        e.stopPropagation();
+      });
+      document.querySelector('.search-btn').addEventListener('click', () => {
+        return this.fetch();
+      });
+    }
+  }
   const movie = {
     init: function init(config) {
       this.url = 'http://react-cdp-api.herokuapp.com/movies';
@@ -28,7 +67,7 @@ function movieFunc() {
       this.fetch();
     },
     attachTemplate: function aT() {
-      let self = this;
+      const self = this;
       let cards = [];
       cards = self.movieList.map(function m(movies) {
         let template = self.template;
@@ -41,13 +80,12 @@ function movieFunc() {
       this.container.innerHTML = cards.join('');
     },
     fetch: function fnFetch() {
-      let self = this;
-      let url = `${this.url}?searchBy=${this.searchBy}&search=${this.movieSearch || ''}&offset=${this.pagination.offset}`;
+      const self = this;
+      const url = `${this.url}?searchBy=${this.searchBy}&search=${this.movieSearch || ''}&offset=${this.pagination.offset}`;
       fetch(url)
         .then(response => response.json())
         .then(data => {
           self.movieList = data.data;
-          console.log(self.movieList);
           self.pagination = {
             offset: data.offset,
             limit: data.limit,
@@ -65,7 +103,7 @@ function movieFunc() {
       <span class="page-right">0</span>
       <button class="right">></button>`;
       let paginationContainer = document.querySelector('.pagination-container');
-      let self = this;
+      const self = this;
       paginationContainer.insertAdjacentHTML('beforeend', pagination);
       paginationContainer.addEventListener('click', function onClick(e) {
         let isStart = self.pagination.offset === 0;
@@ -103,7 +141,7 @@ function movieFunc() {
         <button class="search-btn">Let's go!</button>
         </span>`;
       let searchContainer = document.querySelector('.search');
-      let self = this;
+      const self = this;
       searchContainer.insertAdjacentHTML('beforeend', search);
       searchContainer.addEventListener('change', function onChange(e) {
         if (e.target && e.target.matches('select#search-by')) {
