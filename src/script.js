@@ -7,6 +7,7 @@ function movieFunc() {
       this.template = config.template;
       this.container = config.container;
       this.searchBy = 'title';
+      this.initSearch();
       this.fetch();
     },
     attachTemplate: function a() {
@@ -31,7 +32,6 @@ function movieFunc() {
       xhr.responseType = 'json';
       xhr.onreadystatechange = function request(data) {
         if (xhr.readyState === 4) {
-          console.log(xhr.response);
           self.movieList = xhr.response.data;
           self.pagination = {
             offset: data.offset,
@@ -45,11 +45,16 @@ function movieFunc() {
         }
       };
       xhr.send();
+    },
+    initSearch: function initSearch() {
+      var search = '<label for="movie-search"> Search the movie:</label> <span class="search-field"> <select id="search-by"> <option value="title">title</option> <option value="genres">genres</option> </select> <input type="search" id="movie-search" placeholder="Search..."> <button class="search-btn">Let\'s go!</button> </span>';
+      var searchContainer = document.querySelector('.search');
+      searchContainer.insertAdjacentHTML('beforeend', search);
     }
   };
   movie.init({
     template: card,
-    container: document.getElementsByClassName('movies')[0] // $('ul.movies')
+    container: document.getElementsByClassName('movies')[0]
   });
 }
 
