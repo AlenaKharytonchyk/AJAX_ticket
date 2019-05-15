@@ -101,7 +101,7 @@ function movieFunc() {
       $('.page-right').text(allPages);
     },
     initSearch: function initSearch() {
-      const search = `<label for='movie-search'>
+      const search = `<form><label for='movie-search'>
         Search the movie:</label>
         <span class="search-field">
         <select id="search-by">
@@ -109,10 +109,11 @@ function movieFunc() {
           <option value="genres">genres</option>
         </select>
         <input type='search' id='movie-search' placeholder="Search...">
-        <button class="search-btn">Let's go!</button>
-        </span>`;
+        <button type='submit' class="search-btn">Let's go!</button>
+        </span></form>`;
       $('.search').append(search);
       let self = this;
+      $('form').on('submit', false);
       $('.search').on('change', function onChange(event) {
         if (event.target.id === 'search-by') {
           self.searchBy = event.target.value;
