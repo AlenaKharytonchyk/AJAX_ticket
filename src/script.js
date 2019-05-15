@@ -108,7 +108,7 @@ class Movie {
   }
 
   initSearch() {
-    const search = `<label for='movie-search'>
+    const search = `<form><label for='movie-search'>
       Search the movie:</label>
       <span class="search-field">
       <select id="search-by">
@@ -116,8 +116,8 @@ class Movie {
         <option value="genres">genres</option>
       </select>
       <input type='search' id='movie-search' placeholder="Search...">
-      <button class="search-btn">Let's go!</button>
-      </span>`;
+      <button type="submit" class="search-btn">Let's go!</button>
+      </span></form>`;
     const searchContainer = document.querySelector('.search');
     searchContainer.insertAdjacentHTML('beforeend', search);
     searchContainer.addEventListener('change', (e) => {
@@ -128,7 +128,8 @@ class Movie {
       }
       e.stopPropagation();
     });
-    document.querySelector('.search-btn').addEventListener('click', () => {
+    document.querySelector('.search-btn').addEventListener('click', (e) => {
+      e.preventDefault();
       return this.fetch(true);
     });
   }
