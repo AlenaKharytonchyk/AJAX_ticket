@@ -78,7 +78,7 @@ function movieFunc() {
       document.querySelector('.page-right').innerHTML = allPages;
     },
     initSearch: function initSearch() {
-      var search = '<label for="movie-search"> Search the movie:</label> <span class="search-field"> <select id="search-by"> <option value="title">title</option> <option value="genres">genres</option> </select> <input type="search" id="movie-search" placeholder="Search..."> <button class="search-btn">Let\'s go!</button> </span>';
+      var search = '<form><label for="movie-search"> Search the movie:</label> <span class="search-field"> <select id="search-by"> <option value="title">title</option> <option value="genres">genres</option> </select> <input type="search" id="movie-search" placeholder="Search..."> <button type="submit" class="search-btn">Let\'s go!</button> </span></form>';
       var searchContainer = document.querySelector('.search');
       var self = this;
       searchContainer.insertAdjacentHTML('beforeend', search);
@@ -90,7 +90,8 @@ function movieFunc() {
         }
         e.stopPropagation();
       });
-      document.querySelector('.search-btn').addEventListener('click', function onClick() {
+      document.querySelector('.search-btn').addEventListener('click', function onClick(event) {
+        event.preventDefault();
         return self.fetch();
       });
     }
