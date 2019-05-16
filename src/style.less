@@ -44,7 +44,7 @@ body {
       overflow: hidden;
       li {
         padding: 0.2rem 0;
-        
+
         span {
           color: @second-elements-color;
           font-size: 0.8rem;
@@ -100,16 +100,18 @@ body {
     align-items: center;
   }
 }
-  .search-btn, .left, .right {
-    background-color: @body-background-color;
-    border: solid 1px @white;
-    padding: 0.5rem 1rem;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    color: @main-text-color;
-    cursor: pointer;
-  }
+.search-btn,
+.left,
+.right {
+  background-color: @body-background-color;
+  border: solid 1px @white;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  color: @main-text-color;
+  cursor: pointer;
+}
 
 .search-field {
   // box-shadow: 0px 0px 16px 0px @second-elements-color;
@@ -135,14 +137,17 @@ body {
   top: 5%;
   background-color: @white;
   color: @body-background-color;
+
 }
 .content {
   width: 100%;
 }
-@media all and (max-width: 860px) {
+@media screen and (max-width: 860px) {
   .pagination {
     width: 25px;
-    left: calc(99%-40px);
+    left: calc(99%-75px);
+    top: 4%;
+    display: flex;
     button {
       padding: 4px 8px;
     }
@@ -151,21 +156,19 @@ body {
     }
   }
 }
-@media all and (max-width: 640px) {
+@media screen and (max-width: 640px) {
   .content {
     font-size: 0.8rem;
   }
   .search {
     form {
       label {
-        font-size: 1rem;
+        display: none;
       }
       .search-field {
         position: relative;
         right: 10%;
         height: 30px;
-        // display: flex;
-        // flex-direction: column;
         #movie-search {
           width: 45%;
         }
@@ -176,8 +179,8 @@ body {
     }
   }
 }
-@media all and (max-width: 480px) {
-    .card {
+@media screen and (max-width: 580px) {
+  .card {
     position: relative;
     .vote {
       right: 70%;
@@ -186,18 +189,19 @@ body {
     }
     .media {
       img {
-      position: relative;
-      left: 40%;
+        position: relative;
+        left: 40%;
+      }
     }
-  }
     .content {
       display: none;
       font-size: 0.7rem;
       position: relative;
       right: 50%;
       width: inherit;
-      h1, ul {
-        width: calc(480px-(120%));
+      h1,
+      ul {
+        width: calc(480px- (120%));
         // margin: 0;
       }
     }
@@ -206,17 +210,17 @@ body {
       background-color: @body-background-color;
       color: @white;
       cursor: pointer;
-      .content{
-      display: block;
-      ul li span{
-        color: @white;
-        line-height: 1.3rem;
+      .content {
+        display: block;
+        ul li span {
+          color: @white;
+          line-height: 1.3rem;
+        }
       }
-    }
-    img, .vote {
-      opacity: 0.4;
-    }
-    
+      img,
+      .vote {
+        opacity: 0.4;
+      }
     }
   }
 }
