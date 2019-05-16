@@ -139,13 +139,45 @@ body {
 .content {
   width: 100%;
 }
+@media all and (max-width: 860px) {
+  .pagination {
+    width: 25px;
+    left: calc(99%-40px);
+    button {
+      padding: 4px 8px;
+    }
+    span {
+      display: none;
+    }
+  }
+}
 @media all and (max-width: 640px) {
   .content {
     font-size: 0.8rem;
   }
+  .search {
+    form {
+      label {
+        font-size: 1rem;
+      }
+      .search-field {
+        position: relative;
+        right: 10%;
+        height: 30px;
+        // display: flex;
+        // flex-direction: column;
+        #movie-search {
+          width: 45%;
+        }
+        #search-by {
+          width: 20%;
+        }
+      }
+    }
+  }
 }
 @media all and (max-width: 480px) {
-  .card {
+    .card {
     position: relative;
     .vote {
       right: 70%;
