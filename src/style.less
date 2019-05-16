@@ -28,8 +28,8 @@ body {
       display: flex;
       box-shadow: 0px 0px 16px 0px @second-elements-color;
       max-width: 40rem;
-      min-width: 20rem;
-      border: solid 1px @main-text-color;
+      // min-width: 20rem;
+      // border: solid 1px @main-text-color;
     }
     img {
       height: 20rem;
@@ -39,9 +39,10 @@ body {
     }
     ul {
       height: inherit;
-      padding: 0;
-      margin: 0 0.5rem;
+      padding-right: 14px;
+      margin: 0 .5rem;
       overflow: hidden;
+      padding-inline-start: 10px;
       li {
         padding: 0.2rem 0;
 
@@ -65,7 +66,7 @@ body {
   .overview {
     overflow: hidden;
     position: relative;
-    line-height: 1.2em;
+    line-height: 1.1rem;
     max-height: 3.5em;
     text-align: justify;
     margin-right: -1em;
@@ -132,9 +133,8 @@ body {
 .pagination {
   position: fixed;
   z-index: 2;
-  // left: 90%;
   left: calc(99%-170px);
-  top: 5%;
+  top: 4%;
   background-color: @white;
   color: @body-background-color;
 
@@ -156,9 +156,16 @@ body {
     }
   }
 }
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 750px) {
   .content {
     font-size: 0.8rem;
+    line-height: 1rem;
+  }
+  .movies .overview:before {
+    content: "...";
+    position: absolute;
+    right: 0;
+    bottom: -5px;
   }
   .search {
     form {
@@ -179,30 +186,39 @@ body {
     }
   }
 }
-@media screen and (max-width: 580px) {
+@media screen and (max-width: 540px) {
+  ul.movies {
+    padding-inline-start: 0px;
+}
+.movies .overview:before {
+  content: "...";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
   .card {
+    width: 13rem !important;
     position: relative;
     .vote {
-      right: 70%;
-      bottom: 85%;
+      right: calc(100% - 20px);
+      bottom: 88%;
       position: absolute;
     }
     .media {
       img {
         position: relative;
-        left: 40%;
+        left: 0;
       }
     }
     .content {
       display: none;
       font-size: 0.7rem;
       position: relative;
-      right: 50%;
+      right: 110%;
       width: inherit;
       h1,
       ul {
-        width: calc(480px- (120%));
-        // margin: 0;
+        width: 14rem;
       }
     }
     &:hover {
@@ -214,7 +230,7 @@ body {
         display: block;
         ul li span {
           color: @white;
-          line-height: 1.3rem;
+          line-height: 1.4rem;
         }
       }
       img,
