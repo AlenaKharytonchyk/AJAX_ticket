@@ -1,4 +1,4 @@
-const card = `<li class="card">
+const card = `<li class="card" id="{{id}}">
   <div class="media">     
     <img src="{{poster_path}}" alt="{{title}}">
     <span class="vote">{{vote_average}}</span> 
@@ -50,6 +50,7 @@ class Movie {
       return template;
     });
     this.container.innerHTML = cards.join('');
+    this.mediaQuery();
   }
 
   fetch(resetPagination) {
@@ -131,6 +132,16 @@ class Movie {
     document.querySelector('.search-btn').addEventListener('click', (e) => {
       e.preventDefault();
       return this.fetch(true);
+    });
+  }
+
+  mediaQuery() {
+    document.querySelectorAll('.card').forEach(elem => {
+      elem.addEventListener('click', (e)=>{
+        console.log(e.target, elem.id);
+        let film = this.movieList.find(movieInfo => movieInfo.id === +elem.id);
+        console.log(film);
+      });
     });
   }
 }
