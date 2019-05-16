@@ -63,30 +63,30 @@ body {
     bottom: 98%;
     right: 2%;
   }
-  .overview {
-    overflow: hidden;
-    position: relative;
-    line-height: 1.1rem;
-    max-height: 3.5em;
-    text-align: justify;
-    margin-right: -1em;
-    padding-right: 1em;
-  }
-  .overview:before {
-    content: "...";
-    position: absolute;
-    right: 0;
-    bottom: 0;
-  }
-  .overview:after {
-    content: "";
-    position: absolute;
-    right: 0;
-    width: 1em;
-    height: 1em;
-    margin-top: 0.2em;
-    background: @body-background-color;
-  }
+  // .overview {
+  //   overflow: hidden;
+  //   position: relative;
+  //   line-height: 1.1rem;
+  //   max-height: 3.5em;
+  //   text-align: justify;
+  //   margin-right: -1em;
+  //   // padding-right: 1em;
+  // }
+  // .overview:before {
+  //   content: "...";
+  //   position: absolute;
+  //   right: 0;
+  //   bottom: 0;
+  // }
+  // .overview:after {
+  //   content: "";
+  //   position: absolute;
+  //   right: 0;
+  //   width: 1em;
+  //   height: 1em;
+  //   margin-top: 0.2em;
+  //   background: @body-background-color;
+  // }
 }
 .search {
   margin: 2rem auto;
@@ -161,12 +161,6 @@ body {
     font-size: 0.8rem;
     line-height: 1rem;
   }
-  .movies .overview:before {
-    content: "...";
-    position: absolute;
-    right: 0;
-    bottom: -5px;
-  }
   .search {
     form {
       label {
@@ -189,12 +183,6 @@ body {
 @media screen and (max-width: 540px) {
   ul.movies {
     padding-inline-start: 0px;
-}
-.movies .overview:before {
-  content: "...";
-  position: absolute;
-  right: 0;
-  bottom: 0;
 }
   .card {
     width: 13rem !important;
@@ -219,6 +207,9 @@ body {
       h1,
       ul {
         width: 14rem;
+      }
+      h1{
+        line-height: 2rem;
       }
     }
     &:hover {
