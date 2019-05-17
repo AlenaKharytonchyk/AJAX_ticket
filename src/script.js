@@ -2,7 +2,6 @@ const card = `<li class="card" id="{{id}}">
   <div class="media">     
     <img src="{{poster_path}}" alt="{{title}}">
     <span class="vote">{{vote_average}}</span> 
-
   </div>
   <div class="content">
     <h1>{{title}}</h1>
@@ -11,11 +10,36 @@ const card = `<li class="card" id="{{id}}">
       <li class="tagline"><span>tagline:</span>{{tagline}}</li>
       <li class="release"><span>release date:</span>{{release_date}}</li>
       <li class="runtime"><span>runtime:</span>{{runtime}}</li>
-      <li class="overview"><span>storyline:</span>{{overview}}</li>
+      <li class="overview"><span>storyline:</span>{{overview}}<a id="open-button" data-modal="{{id}}" href="{{url}}">=></a></li>
       <li class="budget"><span>budget:</span>$ {{budget}}</li>
     </ul>
-  </div>      
+  </div>     
+
     </li>`;
+const modalWindow = `
+<div class="modal-guts">
+
+<button class="class-button" id="close-button">Закрыть</button>
+  <li class="card" id="{{id}}">
+    <div class="media">     
+      <img src="{{poster_path}}" alt="{{title}}">
+      <span class="vote">{{vote_average}}</span> 
+    </div>
+    <div class="content">
+      <h1>{{title}}</h1>
+      <ul>
+        <li class="genres"><span>genres:</span>{{genres}}</li>
+        <li class="tagline"><span>tagline:</span>{{tagline}}</li>
+        <li class="release"><span>release date:</span>{{release_date}}</li>
+        <li class="runtime"><span>runtime:</span>{{runtime}}</li>
+        <li class="overview"><span>storyline:</span>{{overview}}</li>
+        <li class="budget"><span>budget:</span>$ {{budget}}</li>
+      </ul>
+    </div>     
+  </li>
+</div>  
+<div class="modal-overlay" id="modal-overlay"></div>
+`;
 class Movie {
   constructor(config) {
     this.baseUrl = 'http://react-cdp-api.herokuapp.com/movies';
@@ -37,6 +61,7 @@ class Movie {
     this.initSearch();
     this.paginationRendering();
     this.fetch();
+    this.attachmodalWindow();
   }
 
   attachTemplate() {
@@ -142,6 +167,29 @@ class Movie {
         let film = this.movieList.find(movieInfo => movieInfo.id === +elem.id);
         console.log(film);
       });
+    });
+  }
+
+  attachmodalWindow() {
+    const modal = document.querySelector('#modal');
+
+
+    const modalOverlay = document.querySelector('#modal-overlay');
+
+
+    const closeButton = document.querySelector('#close-button');
+
+
+    const openButton = document.querySelector('#open-button');
+
+    closeButton.addEventListner('click', function () {
+      modal.classList.toggle('closed');
+      modalOverlay.classList.toggle('closed');
+    });
+
+    openButton.addEventListner('click', function () {
+      modal.classList.toggle('closed');
+      modalOverlay.classList.toggle('closed');
     });
   }
 }
