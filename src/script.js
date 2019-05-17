@@ -30,7 +30,7 @@ class Movie {
   }
 
   get url() {
-    return `${this.baseUrl}?searchBy=${this.searchBy}&search=${this.movieSearch || ''}&offset=${this.pagination.offset}`;
+    return `${this.baseUrl}?searchBy=${this.searchBy}&search=${this.movieSearch || ''}&offset=${this.pagination.offset}&id=${this.id}`;
   }
 
   render() {
