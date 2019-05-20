@@ -40,11 +40,41 @@ const modalWindow = `
 </div>  
 <div class="modal-overlay" id="modal-overlay"></div>
 `;
+
+class Modal {
+  constructor(modalContainer) {
+    this.container = modalContainer;
+    /* TODO: if container is empty you can add render logic here */
+    this.modalRender();
+  }
+
+  modalRender() {
+    this.container = document.querySelector('.modal');
+    this.container.innerHTML = modalWindow;
+  }
+
+  // modifyContent(htmlContent) {
+  //   this.container.innerHTML = htmlContent;
+  // }
+
+  show() {
+    if (this.container.classList.contains('closed')) {
+      this.container.classList.remove('closed');
+    }
+  }
+
+  hide() {
+    if (this.container.classList.contains('closed')) {
+      this.container.classList.add('closed');
+    }
+  }
+}
 class Movie {
   constructor(config) {
     this.baseUrl = 'http://react-cdp-api.herokuapp.com/movies';
     this.template = config.template;
     this.container = config.container;
+    this.modal = new Modal(config.modalContainer);
     this.searchBy = 'title';
     this.pagination = {
       offset: 0,
@@ -61,7 +91,6 @@ class Movie {
     this.initSearch();
     this.paginationRendering();
     this.fetch();
-    this.attachmodalWindow();
   }
 
   attachTemplate() {
@@ -166,14 +195,19 @@ class Movie {
         console.log(e.target, elem.id);
         let film = this.movieList.find(movieInfo => movieInfo.id === +elem.id);
         console.log(film);
+        // this.modal.modifyContent(this.modalWindow);
+        this.modal.show();
       });
     });
+    document.querySelector('#close-button').addEventListener('click', ()=> this.modal.hide());
   }
 }
 
 const config = {
   template: card,
-  container: document.getElementsByClassName('movies')[0]
+  container: document.getElementsByClassName('movies')[0],
+  modalContainer: document.querySelector('.modal'),
+  innerHTML: modalWindow
 };
 const movieApp = new Movie(config);
 
