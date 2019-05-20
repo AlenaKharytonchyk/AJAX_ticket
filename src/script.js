@@ -18,9 +18,12 @@ const card = `<li class="card" id="{{id}}">
     </li>`;
 const modalWindow = `
 <div class="modal-guts">
-
 <button class="class-button" id="close-button">Закрыть</button>
-  <li class="card" id="{{id}}">
+<div class="modal-card"></div>
+</div>  
+<div class="modal-overlay" id="modal-overlay"></div>
+`;
+const modalContent = `
     <div class="media">     
       <img src="{{poster_path}}" alt="{{title}}">
       <span class="vote">{{vote_average}}</span> 
@@ -35,27 +38,19 @@ const modalWindow = `
         <li class="overview"><span>storyline:</span>{{overview}}</li>
         <li class="budget"><span>budget:</span>$ {{budget}}</li>
       </ul>
-    </div>     
-  </li>
-</div>  
-<div class="modal-overlay" id="modal-overlay"></div>
+  </div>
 `;
 
 class Modal {
   constructor(modalContainer) {
     this.container = modalContainer;
-    /* TODO: if container is empty you can add render logic here */
-    this.modalRender();
-  }
-
-  modalRender() {
-    this.container = document.querySelector('.modal');
     this.container.innerHTML = modalWindow;
+    this.container.querySelector('#close-button').addEventListener('click', ()=> this.hide());
   }
 
-  // modifyContent(htmlContent) {
-  //   this.container.innerHTML = htmlContent;
-  // }
+  modifyContent(htmlContent) {
+    this.container.querySelector('.modal-card').innerHTML = htmlContent;
+  }
 
   show() {
     if (this.container.classList.contains('closed')) {
@@ -64,7 +59,7 @@ class Modal {
   }
 
   hide() {
-    if (this.container.classList.contains('closed')) {
+    if (!this.container.classList.contains('closed')) {
       this.container.classList.add('closed');
     }
   }
@@ -196,18 +191,22 @@ class Movie {
         let film = this.movieList.find(movieInfo => movieInfo.id === +elem.id);
         console.log(film);
         // this.modal.modifyContent(this.modalWindow);
+        let template = modalContent;
+        Object.keys(film).forEach((key) => {
+          let temp = new RegExp('{{' + key + '}}', 'g');
+          template = template.replace(temp, film[key]);
+        });
+        this.modal.modifyContent(template);
         this.modal.show();
       });
     });
-    document.querySelector('#close-button').addEventListener('click', ()=> this.modal.hide());
   }
 }
 
 const config = {
   template: card,
   container: document.getElementsByClassName('movies')[0],
-  modalContainer: document.querySelector('.modal'),
-  innerHTML: modalWindow
+  modalContainer: document.querySelector('.modal')
 };
 const movieApp = new Movie(config);
 
