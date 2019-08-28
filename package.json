@@ -1,7 +1,7 @@
 {
-  "name": "Flexbox_Layout_Task",
+  "name": "HR-template",
   "version": "1.0.0",
-  "description": "Please create two layouts using flexbox properties as much as possible: - img/screen_log_in.png - img/screen.png",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AlenaKharytonchyk/Flexbox_Layout_Task.git"
+    "url": "git+https://github.com/AlenaKharytonchyk/HR_markup"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/AlenaKharytonchyk/Flexbox_Layout_Task/issues"
+    "url": "https://github.com/AlenaKharytonchyk/HR_markup"
   },
-  "homepage": "https://alenakharytonchyk.github.io/Flexbox_Layout_Task/",
+  "homepage": " ",
   "devDependencies": {
     "@babel/core": "^7.4.0",
     "@babel/preset-env": "^7.4.2",

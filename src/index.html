@@ -4,17 +4,56 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Movie list</title>
+  <title>HR markup</title>
    <!-- inject:css -->
   <!-- endinject -->
 </head>
 <body>
-  <div class="search"></div>
-  <div class="pagination-container"></div>
-  <ul class="movies"></ul>
-  
- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
- <!-- inject:js -->
- <!-- endinject -->
+  <header class='header'>
+    <div class='header-logo'><img src='img/EPAM.png' alt="EPAM-logo"></div>
+  </header>
+  <main>
+    <section class='greetings-block'>
+      <h1>Front-end & JavaScript</h1>
+      <h2>Recognition Digest!</h2>
+    </section>
+    <section class='start-block'>
+      <img class='badges' src='img/Bages_with_stroke.png' alt="best_start">
+      <div class='background-img-top'><img src='img/upper.png' alt="stars"></div>
+      <h3 class='start-block-heading'>BEST START</h3>
+      <p class='start-block-description'>For demonstrating great results and quick adaptation.</p>
+      <section class='start-block_cards-block'>
+        <div class='start-block_cards-block card'>
+          <img src='img/Mask.png' alt="portreit">
+          <h4>Johnatan Geil</h4>
+          <span class='start-block_cards-block card-title'>Senior Software Engineer</span>
+          <span class='start-block_cards-block card-description'>I'd like to say a HUGE thank you for your fantastic work on the InfoNgen Discovery Portal.
+            I know these past few months have been challenging, but you've grown a lot professionally,
+            and you've handled it really well!
+          </span>
+        </div>
+        <div class='start-block_cards-block card'>
+           <img src='img/Mask.png' alt="portreit">
+          <h4>Johnatan Geil</h4>
+          <span class='start-block_cards-block card-title'>Senior Software Engineer</span>
+          <span class='start-block_cards-block card-description'>
+            I'd like to say a HUGE thank you for your fantastic work on the InfoNgen Discovery Portal.
+             I know these past few months have been challenging, but you've grown a lot professionally,
+            and you've handled it really well!
+          </span>
+        </div>
+      </section>
+      <div class='background-img-top'><img src='img/lower.png' alt="stars"></div>
+    </section>
+    <section class='recognition-block'>
+      <img class='badges-recognition' src='img/Recognition_from_customer.png' alt="Recognition_from_customer">
+    </section>
+    <section class='thankyou-block'>
+      <img class='badges-hero' src='img/Superhero.png' alt="hero-badges">
+    </section>
+  </main>
+  <footer class='footer-block'>
+    <p>Use <a href='https://support.epam.com'>SUPPORT.EPAM.COM</a> to submit your request, questions or report service issues.</p>
+  </footer>
 </body>
 </html>
