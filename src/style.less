@@ -5,6 +5,7 @@
 @orange-color: #FCAA00;
 @light-grey: #9FA1AE;
 @footer-color: #999;
+@card-text: #454444;
 
 @max-width: 650px;
 
@@ -78,13 +79,54 @@ body {
       flex-direction: column;
       align-items: center;
 
-      .cards{
+      .cards-block {
+        width: 100%;
         display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
-        height: 320px;
+        flex-wrap: wrap;
+
+        &_card-container {
+          width: 283px;
+          height: 320px;
+          background-color: @white;
+          color: @main-color;
+          margin-top: 20px;
+          border-radius: 3px;
+
+          &--card {
+            font-size: 14px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            display: flex;
+            height: 100%;
+            margin: 24px;
+          }
+
+            h4 {
+              margin: 10px;
+            }
+            .card-title {
+              color: @light-grey;
+              margin-bottom: 6px;
+            }
+            .card-description {
+              color: @card-text;
+              margin: 0;
+              text-align: center;
+            }
+          }
+        }
       }
+
+      //.cards{
+      //  display: flex;
+      //  flex-wrap: wrap;
+      //  justify-content: center;
+      //  align-items: center;
+      //  height: 320px;
+      //}
       .background-img {
         display: flex;
         align-items: center;
@@ -108,38 +150,6 @@ body {
         font-size: 1.1em;
       }
 
-      &_cards-block {
-        height: 100%;
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-
-        & .card {
-          background-color: @white;
-          width: 283px;
-          height: 100%;
-          border-radius: 3px;
-          color: @main-color;
-          margin: 0;
-          font-size: 14px;
-          flex-direction: column;
-          align-items: center;
-          justify-content: flex-start;
-
-          h4 {
-            margin: 0;
-          }
-          &-title {
-            color: @light-grey;
-            margin: 0;
-          }
-          &-description {
-            color: @main-color;
-            margin: 0;
-          }
-        }
-      }
     }
     .recognition-block {
       background-color: @orange-color;
@@ -151,8 +161,6 @@ body {
       color: @white;
     }
 
-
-  }
   .footer-block {
     max-width: @max-width;
     width: 100%;
