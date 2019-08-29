@@ -13,148 +13,154 @@ body {
   flex-direction: column;
   align-items: center;
   font-family: 'Arial', open-sans, sans-serif;
-
 }
-.header {
-  max-width: @max-width;
-  width: 100%;
-  height: 60px;
-  background-color: @main-color;
 
-  .header-logo {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 100%;
-
-    img {
-      padding-right: 17px;
-    }
-  }
-}
-main {
-  max-width: @max-width;
-  width: 100%;
-
-  .greetings-block {
-    height: 250px;
-    background-image: url(upper_banner.png);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: @main-color;
-
-    h1 {
-      margin: 0 0 16px;
-      font-size: 2.2em;
-    }
-
-    h2 {
-      margin: 0;
-      font-size: 1.7em;
-    }
-  }
-  .start-block {
-    height: 606px;
-    background-color: @light-blue;
-    color: @white;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-
-    img.badges {
-      position: absolute;
-      top: 30%;
-    }
-
-    &-heading {
-      font-size: 1.6em;
-      margin: 0;
-    }
-
-    &-description {
-      font-size: 1.1em;
-    }
-
-    &_cards-block {
-      height: 320px;
+  .badges {
+    &_container {
+      position: relative;
+      height: 110px;
       width: 100%;
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
+    }
+
+    &_image {
+      position: absolute;
+      top: -51px;
+      left: calc(50% - 51px);
+    }
+  }
+
+  .header {
+    max-width: @max-width;
+    width: 100%;
+    height: 60px;
+    background-color: @main-color;
+
+    .header-logo {
+      display: flex;
+      justify-content: flex-end;
       align-items: center;
+      height: 100%;
 
-      & .card {
-        background-color: @white;
-        width: 283px;
-        height: 100%;
-        border-radius: 3px;
-        color: @main-color;
-        margin: 0;
-        font-size: 14px;
-        flex-direction: column;
-
-        h4 {
-          margin: 0;
-        }
-        &-title {
-          color: @light-grey;
-          margin: 0;
-        }
-        &-description {
-          color: @main-color;
-          margin: 0;
-        }
+      img {
+        padding-right: 17px;
       }
     }
   }
-  .recognition-block {
-    height: 950px;
-    background-color: @orange-color;
-    color: @white;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
+  main {
+    max-width: @max-width;
+    width: 100%;
 
-    .badges-recognition {
-      position: absolute;
-      top: 91%;
+    .greetings-block {
+      height: 250px;
+      background-image: url(upper_banner.png);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: @main-color;
+
+      h1 {
+        margin: 0 0 16px;
+        font-size: 2.2em;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 1.7em;
+      }
     }
+
+    section.block {
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+      align-items: center;
+
+      .cards{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        height: 320px;
+      }
+      .background-img {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .start-block {
+      background-color: @light-blue;
+      color: @white;
+
+      &-heading {
+        font-size: 1.6em;
+        margin: 0;
+      }
+
+      &-description {
+        font-size: 1.1em;
+      }
+
+      &_cards-block {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        & .card {
+          background-color: @white;
+          width: 283px;
+          height: 100%;
+          border-radius: 3px;
+          color: @main-color;
+          margin: 0;
+          font-size: 14px;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+
+          h4 {
+            margin: 0;
+          }
+          &-title {
+            color: @light-grey;
+            margin: 0;
+          }
+          &-description {
+            color: @main-color;
+            margin: 0;
+          }
+        }
+      }
+    }
+    .recognition-block {
+      background-color: @orange-color;
+      color: @white;
+
+    }
+    .thankyou-block {
+      background-color: @main-color;
+      color: @white;
+    }
+
+
   }
-  .thankyou-block {
-    height: 606px;
+  .footer-block {
+    max-width: @max-width;
+    width: 100%;
+    height: 50px;
     background-color: @main-color;
-    color: @white;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
+    color: @footer-color;
+    font-size: 13px;
+    text-align: center;
 
-    .badges-hero{
-      position: absolute;
-      top: 189%;
+    a {
+      text-decoration: none;
+      color: @light-blue;
     }
   }
-
-
-}
-.footer-block {
-  max-width: @max-width;
-  width: 100%;
-  height: 50px;
-  background-color: @main-color;
-  color: @footer-color;
-  font-size: 13px;
-  text-align: center;
-
-  a {
-    text-decoration: none;
-    color: @light-blue;
-  }
-}
 
